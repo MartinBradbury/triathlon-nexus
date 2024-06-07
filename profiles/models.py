@@ -38,9 +38,6 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50, blank=True)
     email = models.EmailField(max_length=254, blank=True)
-    date_of_birth = models.DateField(
-        help_text='yyyy-mm-dd'
-    )
     gender = models.CharField(
         max_length=1,
         choices=GENDER_CHOICES,
