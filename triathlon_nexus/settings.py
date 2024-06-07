@@ -38,7 +38,7 @@ SECRET_KEY = 'django-insecure-mt7ph-qyq7k4s9qvn(8#4y#a4=)^=@f6on$t3-ohl$pd=lb+xh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["8000-martinbradb-triathlonne-l9sfe3tqygl.ws-eu114.gitpod.io"]
 
 
 # Application definition
@@ -139,3 +139,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://8000-martinbradb-triathlonne-l9sfe3tqygl.ws-eu114.gitpod.io",
+    "https://*.herokuapp.com"
+]
