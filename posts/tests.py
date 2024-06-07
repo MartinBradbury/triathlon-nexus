@@ -54,6 +54,26 @@ class PostDetailViewTest(APITestCase):
         # Create a post owned by 'jacob'
         self.post = Posts.objects.create(owner=self.jacob, title='Original Title')
 
+
+
+    def test_can_retrieve_post_using_valid_id(self):
+        # Send a GET request to list the first post in the list.
+        response = self.client.get('/posts/1/')
+        # Assert that the response will return the title of the post
+        self.assertEqual(response.data['title'], 'Original Title')
+        #Assert that the title matches the assertion.
+        self.assertEqual(response.status_code,
+        status.HTTP_200_OK)
+
+
+    def test_cannot_retrieve_not_created_posts(self):
+        # Send a GET request to list post 500.
+        response = self.client.get('/posts/500/')
+        # Assert that post 500 cannot be found.
+        self.assertEqual(response.status_code, 
+        status.HTTP_404_NOT_FOUND)
+        
+
     def test_logged_in_user_can_edit_own_post(self):
         # Log in as 'jacob'
         self.client.login(username='jacob', password='pw')
