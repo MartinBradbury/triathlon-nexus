@@ -9,10 +9,8 @@ class PostListViewTests(APITestCase):
         # Create two users for testing purposes
         User.objects.create_user(username='jacob', password='pw')
         User.objects.create_user(username='john', password='secret')
-
         # Retrieve the 'jacob' user
         self.jacob = User.objects.get(username='jacob')
-        
         # Create a post owned by 'jacob'
         self.post = Posts.objects.create(owner=self.jacob, title='Original Title')
 
@@ -44,6 +42,17 @@ class PostListViewTests(APITestCase):
         # Assert that the response status code is 403 Forbidden
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
+
+
+class PostDetailViewTest(APITestCase):
+    def setUp(self):
+        # Create two users for testing purposes
+        User.objects.create_user(username='jacob', password='pw')
+        User.objects.create_user(username='john', password='secret')
+        # Retrieve the 'jacob' user
+        self.jacob = User.objects.get(username='jacob')
+        # Create a post owned by 'jacob'
+        self.post = Posts.objects.create(owner=self.jacob, title='Original Title')
 
     def test_logged_in_user_can_edit_own_post(self):
         # Log in as 'jacob'
@@ -87,3 +96,6 @@ class PostListViewTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         # Assert that the post still exists in the database
         self.assertTrue(Posts.objects.filter(id=self.post.id).exists())
+
+
+
