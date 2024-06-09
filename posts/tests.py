@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from.models import Posts 
+from.models import Post
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -12,12 +12,12 @@ class PostListViewTests(APITestCase):
         # Retrieve the 'jacob' user
         self.jacob = User.objects.get(username='jacob')
         # Create a post owned by 'jacob'
-        self.post = Posts.objects.create(owner=self.jacob, title='Original Title')
+        self.post = Post.objects.create(owner=self.jacob, title='Original Title')
 
 
     def test_can_list_posts(self):
         # Create another post by 'jacob' for this test
-        Posts.objects.create(owner=self.jacob, title='test title')
+        Post.objects.create(owner=self.jacob, title='test title')
         # Send a GET request to the '/posts/'
         response = self.client.get('/posts/')
         # Assert that the response status code is 200 OK
@@ -30,7 +30,7 @@ class PostListViewTests(APITestCase):
         # Send a POST request to the '/posts/' with new data
         response = self.client.post('/posts/', {'title': 'test title'})
         # Check if the total number of posts has increased by 1
-        count = Posts.objects.count()
+        count = Post.objects.count()
         self.assertEqual(count, 2)
         # Assert that the response status code indicates successful creation
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -52,7 +52,7 @@ class PostDetailViewTest(APITestCase):
         # Retrieve the 'jacob' user
         self.jacob = User.objects.get(username='jacob')
         # Create a post owned by 'jacob'
-        self.post = Posts.objects.create(owner=self.jacob, title='Original Title')
+        self.post = Post.objects.create(owner=self.jacob, title='Original Title')
 
 
 
@@ -104,7 +104,7 @@ class PostDetailViewTest(APITestCase):
         # Assert that the response status code is 204 No Content, indicating successful deletion
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         # Assert that the post no longer exists in the database
-        self.assertFalse(Posts.objects.filter(id=self.post.id).exists())
+        self.assertFalse(Post.objects.filter(id=self.post.id).exists())
 
 
     def test_different_user_cannot_delete_others_posts(self):
@@ -115,7 +115,7 @@ class PostDetailViewTest(APITestCase):
         # Assert that the response status code is 403 Forbidden
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         # Assert that the post still exists in the database
-        self.assertTrue(Posts.objects.filter(id=self.post.id).exists())
+        self.assertTrue(Post.objects.filter(id=self.post.id).exists())
 
 
 
