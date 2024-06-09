@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Posts
 
 class PostSerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.first_name')
+    owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
