@@ -11,9 +11,7 @@ class PostList(generics.ListCreateAPIView):
     Create a post or List posts
     """
     serializer_class = PostSerializer
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
-    ]
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = Post.objects.all()
 
     def perform_create(self, serializer):
